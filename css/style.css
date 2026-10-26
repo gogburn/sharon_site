@@ -17,6 +17,7 @@
   --display-weight: 400;
   --display-tracking: -0.02em;
   --display-leading: 0.92;
+  --headline-leading: 0.98;  /* multi-line headlines: g descender clears the line below */
   --serif-text: var(--goudy);
   --serif-text-size: 1.3rem;
 
@@ -41,6 +42,7 @@ html[data-type="garamond"] {
   --display: var(--garamond);
   --display-tracking: -0.035em;   /* ITC Garamond is happiest set tight */
   --display-leading: 0.9;
+  --headline-leading: 0.99;  /* the g just touches the ascenders of the line below */
   --serif-text: var(--garamond);
   --serif-text-size: 1.32rem;
 }
@@ -49,6 +51,7 @@ html[data-type="univers"] {
   --display-weight: 700;
   --display-tracking: -0.045em;
   --display-leading: 0.88;
+  --headline-leading: 0.94;
   --serif-text: var(--sans);
   --serif-text-size: 1.15rem;
 }
@@ -157,10 +160,10 @@ em { font-style: italic; }
   font-family: var(--display);
   font-weight: var(--display-weight);
   font-size: clamp(3.4rem, 11.5vw, 11.5rem);
-  line-height: var(--display-leading);
+  line-height: var(--headline-leading);
   letter-spacing: var(--display-tracking);
 }
-.hero-title .line { display: block; overflow: hidden; padding-bottom: .08em; }
+.hero-title .line { display: block; clip-path: inset(-0.5em -0.3em -0.32em -0.3em); }
 .hero-title .line > span { display: inline-block; }
 .hero-title em { color: var(--vermilion); }
 html[data-type="univers"] .hero-title em { font-style: normal; font-weight: 300; }
@@ -440,7 +443,7 @@ html[data-type="univers"] .sub-intro strong { font-style: normal; font-weight: 7
   font-family: var(--display);
   font-weight: var(--display-weight);
   font-size: clamp(2.6rem, 8vw, 7.5rem);
-  line-height: var(--display-leading);
+  line-height: var(--headline-leading);
   letter-spacing: var(--display-tracking);
 }
 .contact-line em { color: var(--mustard); }
@@ -530,7 +533,7 @@ html[data-type="univers"] .contact-line em { font-style: normal; font-weight: 30
 /* ── Motion ── */
 .js .reveal { opacity: 0; transform: translateY(2.5rem); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
 .js .reveal.is-in { opacity: 1; transform: none; }
-.js .hero-title .line > span { transform: translateY(105%); transition: transform 1.1s cubic-bezier(.2,.75,.2,1); }
+.js .hero-title .line > span { transform: translateY(150%); transition: transform 1.1s cubic-bezier(.2,.75,.2,1); }
 .js .hero-title .line:nth-child(2) > span { transition-delay: .12s; }
 .js.is-loaded .hero-title .line > span { transform: none; }
 
