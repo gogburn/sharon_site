@@ -9,7 +9,8 @@ css/style.css   layout, type and colour (type is set by the custom properties at
 js/main.js      scroll reveals, index hover preview, lightbox, type switcher
 ```
 
-**Images:** the `images/` and `favicon_io/` folders from the live site aren't in this repo yet.
+**Images:** the `images/` folder and the PNG favicons from the live site aren't in this repo yet
+(only `favicon_io/favicon.ico` is).
 Until they're copied in, each image falls back to its copy on ogburn.ca, so the preview still
 shows the real work. Once the folders are added here, the fallback (the small script in
 `<head>`) can be deleted.
@@ -75,7 +76,7 @@ The site's text is kept almost word for word, with a few light edits Sharon shou
 
 ## Before launch
 
-- [ ] Copy `images/` and `favicon_io/` into the repo and remove the image-fallback script
+- [ ] Copy `images/` and the remaining `favicon_io/` files into the repo and remove the image-fallback script
 - [ ] Remove the type switcher
 - [ ] License and self-host the final faces
 - [ ] Re-add Google Analytics (`G-KDCQCG12T2`) if it's still wanted
