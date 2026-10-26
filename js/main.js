@@ -48,7 +48,7 @@
     });
   }
 
-  // ── Lightbox with keyboard and arrow navigation ──
+  // ── Lightbox: arrows, keyboard and swipe ──
   var dialog = document.querySelector('.lightbox');
   var lbImg = dialog.querySelector('img');
   var lbText = dialog.querySelector('.lb-text');
@@ -56,7 +56,7 @@
   var works = Array.prototype.slice.call(document.querySelectorAll('.work'));
   var current = 0;
 
-  function show(i) {
+  function show(i, dir) {
     current = (i + works.length) % works.length;
     var work = works[current];
     var img = work.querySelector('img');
@@ -65,6 +65,12 @@
     lbText.innerHTML = work.querySelector('figcaption').innerHTML;
     var section = work.closest('.project').querySelector('.project-title').textContent;
     lbCount.textContent = section + ' — ' + (current + 1) + ' / ' + works.length;
+    if (dir && !reduceMotion && lbImg.animate) {
+      lbImg.animate([
+        { transform: 'translateX(' + dir * 3 + 'rem)', opacity: 0 },
+        { transform: 'none', opacity: 1 }
+      ], { duration: 280, easing: 'cubic-bezier(.2,.7,.2,1)' });
+    }
   }
 
   works.forEach(function (work, i) {
@@ -74,14 +80,32 @@
     btn.addEventListener('click', function () { show(i); dialog.showModal(); });
   });
   dialog.querySelector('.lb-close').addEventListener('click', function () { dialog.close(); });
-  dialog.querySelector('.lb-prev').addEventListener('click', function () { show(current - 1); });
-  dialog.querySelector('.lb-next').addEventListener('click', function () { show(current + 1); });
+  dialog.querySelector('.lb-prev').addEventListener('click', function () { show(current - 1, -1); });
+  dialog.querySelector('.lb-next').addEventListener('click', function () { show(current + 1, 1); });
   dialog.addEventListener('click', function (e) {
     if (e.target === dialog || e.target.classList.contains('lb-figure')) dialog.close();
   });
   dialog.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft') show(current - 1);
-    if (e.key === 'ArrowRight') show(current + 1);
+    if (e.key === 'ArrowLeft') show(current - 1, -1);
+    if (e.key === 'ArrowRight') show(current + 1, 1);
+  });
+
+  // Swipe left/right to move between images; mostly-vertical drags are ignored
+  var touchX = null, touchY = 0;
+  dialog.addEventListener('touchstart', function (e) {
+    if (e.touches.length !== 1) { touchX = null; return; }
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+  }, { passive: true });
+  dialog.addEventListener('touchend', function (e) {
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    var dy = e.changedTouches[0].clientY - touchY;
+    touchX = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      var dir = dx < 0 ? 1 : -1;
+      show(current + dir, dir);
+    }
   });
 
   // ── Type pairing switcher (review only) ──

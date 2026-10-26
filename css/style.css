@@ -347,8 +347,14 @@ html[data-type="univers"] .sub-intro strong { font-style: normal; font-weight: 7
 .zoom:hover img { transform: scale(1.025); }
 .work.bleed .zoom { padding: 0; background: none; }
 .work.bleed .zoom img { width: 100%; box-shadow: none; }
-.work.white .zoom { background: #fff; aspect-ratio: 4 / 3; }
-.work.white .zoom img { box-shadow: none; max-height: 70%; width: auto; }
+.work.white .zoom { position: relative; padding: 0; background: #fff; aspect-ratio: 4 / 3; }
+/* Logos of any shape sit whole and centred in the tile */
+.work.white .zoom img {
+  position: absolute; inset: 14% 16%;
+  width: 68%; height: 72%;
+  object-fit: contain;
+  box-shadow: none;
+}
 
 .work figcaption {
   max-width: 36rem;
@@ -496,7 +502,7 @@ html[data-type="univers"] .contact-line em { font-style: normal; font-weight: 30
 }
 .lightbox::backdrop { background: transparent; }
 .lb-figure { margin: 0; display: grid; justify-items: center; gap: 1rem; padding: 4rem 0 2rem; height: 100vh; grid-template-rows: 1fr auto; }
-.lb-figure img { max-height: 100%; max-width: 100%; object-fit: contain; min-height: 0; }
+.lb-figure img { max-height: 100%; max-width: 100%; object-fit: contain; min-height: 0; touch-action: pan-y pinch-zoom; }
 .lb-figure figcaption { max-width: 40rem; text-align: center; font-size: .92rem; color: color-mix(in srgb, var(--paper) 75%, transparent); }
 .lb-figure figcaption strong { color: var(--paper); font-weight: 600; }
 .lb-count { display: block; font-size: .72rem; letter-spacing: .14em; margin-bottom: .3rem; color: var(--mustard); }
